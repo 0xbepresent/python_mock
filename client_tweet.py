@@ -4,8 +4,12 @@ from requests.exceptions import RequestException, Timeout, ConnectionError
 
 
 class BadStatus(Exception):
+
     def __init__(self, message):
-        Exception.__init__(self, message)
+        self.message = message
+
+    def __str__(self):
+        return repr(self.message)
 
 
 class ClientTweet(object):
@@ -13,14 +17,14 @@ class ClientTweet(object):
     @staticmethod
     def get_tweets():
         """Function get tweets with api"""
-        url = 'http://search.twitter.com/search.json'
+        url = 'https://api.twitter.com/1.1/search/tweets.json'
         headers = {
             'content-type': 'application/x-www-form-urlencoded'}
         data_send = {
             'q': 'tonsquemisa',
             'count': 5}
         try:
-            response = requests.get(url, data_send, headers, headers)
+            response = requests.get(url, params=data_send, headers=headers)
         except RequestException:
             raise
         except Timeout:
@@ -31,3 +35,7 @@ class ClientTweet(object):
             return response
         else:
             raise BadStatus('Service returned %d' % (response.status_code))
+
+
+if __name__ == '__main__':
+    cli = ClientTweet().get_tweets()

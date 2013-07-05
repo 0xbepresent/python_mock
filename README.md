@@ -1,4 +1,9 @@
-python_mock
+Python mock
 ===========
 
-Python mock with request in Twitter
+Example how to use Mock in Python. 
+
+Blog
+====
+
+[Mock in Python](http://blog.misalabs.com/mocking-testing-con-python)
